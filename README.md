@@ -1,4 +1,0 @@
-SimpleBinaryCalculator
-======================
-
-Simple Binary Calculator
