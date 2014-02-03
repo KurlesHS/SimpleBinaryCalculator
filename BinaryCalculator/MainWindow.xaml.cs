@@ -1,67 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BinaryCalculator
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    
     public class BinarySelector : StackPanel
     {
-        public BinarySelector(int number) {
-            bitNumber = number;
+        public BinarySelector(int number)
+        {
+            BitNumber = number;
             Orientation = Orientation.Vertical;
-            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-            VerticalAlignment = System.Windows.VerticalAlignment.Center;   
-            GroupBox gb = new GroupBox();
-            gb.Header = bitNumber.ToString();
-            checkBox = new CheckBox();
-            checkBox.IsChecked = false;
-            gb.Content = checkBox;
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+            VerticalAlignment = VerticalAlignment.Center;
+            var gb = new GroupBox {Header = BitNumber.ToString(CultureInfo.InvariantCulture)};
+            CheckBox = new CheckBox {IsChecked = false};
+            gb.Content = CheckBox;
             Children.Add(gb);
         }
-        public int bitNumber { get; set; }
-        public CheckBox checkBox { get; set; }
+
+        public int BitNumber { get; set; }
+        public CheckBox CheckBox { get; set; }
     }
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private List<BinarySelector> listOfSelectors;
+        private readonly List<BinarySelector> _listOfSelectors;
+
         public MainWindow()
         {
             InitializeComponent();
-            listOfSelectors = new List<BinarySelector>();
-            for (int i = 31; i >= 0; --i)
+            _listOfSelectors = new List<BinarySelector>();
+            for (var i = 31; i >= 0; --i)
             {
-                BinarySelector bs = new BinarySelector(i);
-                bs.checkBox.Checked += recalculateNumber;
-                bs.checkBox.Unchecked += recalculateNumber;
-                listOfSelectors.Add(bs);
+                var bs = new BinarySelector(i);
+                bs.CheckBox.Checked += RecalculateNumber;
+                bs.CheckBox.Unchecked += RecalculateNumber;
+                _listOfSelectors.Add(bs);
                 stackPanel.Children.Add(bs);
             }
-            recalculateNumber();
+            RecalculateNumber();
         }
 
-        private void recalculateNumber()
+        private void RecalculateNumber()
         {
-            int number = 0;
-            foreach (BinarySelector bi in listOfSelectors)
+            var number = 0;
+            foreach (var bi in _listOfSelectors)
             {
                 number <<= 1;
-                if (bi.checkBox.IsChecked == true)
+                if (bi.CheckBox.IsChecked == true)
                 {
                     number |= 0x01;
                 }
@@ -69,10 +59,10 @@ namespace BinaryCalculator
             hexString.Content = "0x" + number.ToString("X8");
         }
 
-        void recalculateNumber(object sender, RoutedEventArgs e)
+        private void RecalculateNumber(object sender, RoutedEventArgs e)
         {
-            recalculateNumber();
-       }
+            RecalculateNumber();
+        }
 
         private void buttonCopyToContext_Click(object sender, RoutedEventArgs e)
         {
