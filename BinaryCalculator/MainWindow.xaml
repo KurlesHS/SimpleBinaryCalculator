@@ -9,13 +9,11 @@
             <RowDefinition Height="*"/>
                 
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Name="stackPanel" Orientation="Horizontal" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Name="StackPanel" Orientation="Horizontal" HorizontalAlignment="Center"/>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,6" >
-            <Label Name="hexString" FontSize="20" FontWeight="Bold" FontStyle="Italic" Content="0xFEDAEDE0" Margin="3,0"/>
-            <Button Content="Copy to clipboard" Name="buttonCopyToContext" Margin="3,0" Click="buttonCopyToContext_Click"/>
+            <Label Name="HexString" FontSize="20" FontWeight="Bold" FontStyle="Italic" Content="0xFEDAEDE0" Margin="3,0"/>
+            <Button Content="Copy to clipboard" Name="ButtonCopyToContext" Margin="3,0" Click="buttonCopyToContext_Click"/>
+            <TextBox Name="TexBlock" FontSize="20" FontWeight="Bold" FontStyle="Italic" TextChanged="TexBlock_OnTextChanged" TextWrapping="Wrap" Text="TextBlock" TextAlignment="Left" VerticalContentAlignment="Center"/>
         </StackPanel>
         
     </Grid>
