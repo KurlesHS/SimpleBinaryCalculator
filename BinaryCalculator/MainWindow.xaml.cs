@@ -10,8 +10,7 @@ namespace BinaryCalculator
     /// </summary>
     public class BinarySelector : StackPanel
     {
-        public BinarySelector(int number)
-        {
+        public BinarySelector(int number) {
             BitNumber = number;
             Orientation = Orientation.Vertical;
             HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -30,12 +29,10 @@ namespace BinaryCalculator
     {
         private readonly List<BinarySelector> _listOfSelectors;
 
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
             _listOfSelectors = new List<BinarySelector>();
-            for (var i = 31; i >= 0; --i)
-            {
+            for (var i = 31; i >= 0; --i) {
                 var bs = new BinarySelector(i);
                 bs.CheckBox.Checked += RecalculateNumber;
                 bs.CheckBox.Unchecked += RecalculateNumber;
@@ -45,27 +42,22 @@ namespace BinaryCalculator
             RecalculateNumber();
         }
 
-        private void RecalculateNumber()
-        {
+        private void RecalculateNumber() {
             var number = 0;
-            foreach (var bi in _listOfSelectors)
-            {
+            foreach (var bi in _listOfSelectors) {
                 number <<= 1;
-                if (bi.CheckBox.IsChecked == true)
-                {
+                if (bi.CheckBox.IsChecked == true) {
                     number |= 0x01;
                 }
             }
             hexString.Content = "0x" + number.ToString("X8");
         }
 
-        private void RecalculateNumber(object sender, RoutedEventArgs e)
-        {
+        private void RecalculateNumber(object sender, RoutedEventArgs e) {
             RecalculateNumber();
         }
 
-        private void buttonCopyToContext_Click(object sender, RoutedEventArgs e)
-        {
+        private void buttonCopyToContext_Click(object sender, RoutedEventArgs e) {
             Clipboard.SetText(hexString.Content.ToString());
         }
     }
